@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App</title>
+
+    <link rel="stylesheet" href="./assets/style2.css"> 
+
+
+</head>
+<body>
+
+    <button onclick="addRow()" id="insert">Insert</button>
+    <button onclick="addRow()" id="delete">Delete</button>
+    <!-- <button onclick="addRow()" id="button2" >View</button> -->
+
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th>pokedexid</th>
+          <th>trainerid</th>
+          <th>Pokemon_species</th>
+          <th>Pokemon_level</th>
+          <th>Abilty</th>
+          <th>Nature</th>
+          <th>NickName</th>
+          <th>Heled_Item</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+
+          <td>7</td>
+          <td>3</td>
+          <td>squirtle</td>
+          <td>John Doe</td>
+          <td>torret</td>
+          <td>lax</td>
+          <td>null</td>
+          <td>leftover</td>
+        </tr>
+        <tr>
+          <td>8</td>
+        
+        </tr>
+      </tbody>
+    </table>
+
+
+
+    <div id="myModal">
+      <div id="modalContent">
+        <label for="name">1:</label>
+        <input type="text" id="name"><br>
+        
+        <label for="date">2:</label>
+        <input type="text" id="date"><br>
+        
+        <label for="age">3:</label>
+        <input type="text" id="age"><br>
+
+        <label for="name">4:</label>
+        <input type="text" id="name"><br>
+        
+        <label for="date">5:</label>
+        <input type="text" id="date"><br>
+        
+        <label for="age">6:</label>
+        <input type="text" id="age"><br>
+
+        <label for="age">7:</label>
+        <input type="text" id="age"><br>
+    
+        <button onclick="submitForm()" id="s">Submit</button>
+        <button onclick="cancelForm()" id ="s">Cancel</button>
+
+      </div>
+    </div>
+    
+     <script>
+
+// document.getElementById("button2").addEventListener("click", function() {
+//             window.open("Display.html", "_blank");
+//             window.close();
+
+//         });
+
+
+ // Get the button element by its ID
+ var addButton = document.getElementById('insert');
+
+// Get the modal and its content
+var modal = document.getElementById('myModal');
+var modalContent = document.getElementById('modalContent');
+
+// Function to handle button click event
+function addButtonClick() {
+  // Show the modal
+  modal.style.display = 'block';
+}
+
+// Function to submit the form in the modal
+function submitForm() {
+  // Get values from the form
+  var name = document.getElementById('name').value;
+  var date = document.getElementById('date').value;
+  var age = document.getElementById('age').value;
+
+  // Display a message with the entered information
+  if (name && date && age) {
+  //  alert('Name: ' + name + '\nDate: ' + date + '\nAge: ' + age);
+
+    // Hide the modal after submission
+    modal.style.display = 'none';
+  } else {
+    alert('Please fill out all fields.');
+  }
+}
+
+function cancelForm() {
+    // Hide the modal without submitting
+    modal.style.display = 'none';
+  }
+// Add a click event listener to the button
+addButton.addEventListener('click', addButtonClick);
+
+     </script>
+
+</body>
+</html>
