@@ -4,7 +4,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 4000;
+const port = 5500;
 app.use("/assets",express.static("assets"));
 
 // app.use(express.static(__dirname));

@@ -123,7 +123,7 @@ left: 130px;
   
     position: absolute; 
    top: 450px;
-right: 880px; 
+right: 45%; 
 border: none;
 outline: none;
 cursor: pointer;
@@ -141,7 +141,7 @@ width: 100px;
   
     position: absolute; 
    top: 470px;
-right: 880px; 
+right: 45%; 
 border: none;
 outline: none;
 cursor: pointer;
@@ -157,7 +157,7 @@ width: 100px;
   
     position: absolute; 
    top: 460px;
-right: 690px; 
+right: 30%; 
 border: none;
 outline: none;
 cursor: pointer;
