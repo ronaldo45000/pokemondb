@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App</title>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="./assets/style2.css">
+
 
 </head>
+
 <body>
     <h2>View</h2>
 
@@ -16,57 +19,273 @@
     <button id ="logout"  id="logout"> log out</button> -->
 
     <table id="myTable">
-      <td id="mv">Display</td>
-      <thead>
-        <!-- <tr id="th2">
-          <th >Pokemon Database</th>
-        </tr> -->
-        
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <table class="inner-table">
-              <tr>
-                <td>Name</td>
-                <td>John Doe</td>
-                <td>John Doe2</td>
+        <td id="mv">Display</td>
+        <thead>
+            <!-- <tr id="th2">
+                <th >Pokemon Database</th>
+            </tr> -->
 
-              </tr>
-              <tr>
-                <td>Email</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-               
-           
-              </tr>
-              <tr>
-                <td>Age</td>
-                <td>25</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
-                <td>john@example.com</td>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <table class="inner-table">
+                        <tr>
+                            <!-- <th>ID</th>
+                <th>userame</th>
+                <th>password</th>
+                 -->
+                        </tr>
+                        <tbody id="results">
 
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </tbody>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
     </table>
-    
-    <script>
 
-      // document.getElementById("back").addEventListener("click", function() {
-      //             window.open("ChangeTable.html", "_blank");
-      //             window.close();
 
-      //         });
-      //         document.getElementById("logout").addEventListener("click", function() {
-      //             window.open("loginTest.html", "_blank");
-      //             window.close();
+    <script type="text/javascript">
+        const searchInput = document.querySelector('#search');
+        const resultsBody = document.querySelector('#results');
 
-      //         });
-           </script>
+        function load_data(query = '') {
+            // Clear the table if the search bar is empty
+            if (query.trim() === '') {
+                resultsBody.innerHTML = '';
+                return;
+            }
+
+            const request = new XMLHttpRequest();
+
+            request.open('GET', `/search?q=${query}`);
+            request.onload = () => {
+                const results = JSON.parse(request.responseText);
+                let html = '';
+
+                if (results.length > 0) {
+                    const hasUsernameField = results[0].hasOwnProperty('username');
+                    const hasFnameField = results[0].hasOwnProperty('fname');
+                    const hasPokedexID = results[0].hasOwnProperty('PokedexId');
+                    const hasMoveName = results[0].hasOwnProperty('Move_Name');
+                    const hasTypeChart= results[0].hasOwnProperty('Attacking_Type');
+
+
+
+                    if (hasUsernameField) {
+                        html += `
+                        <tr>
+                            <th>ID</th>
+                            <th>username</th>
+                            <th>password</th>
+                        </tr>
+                        `;
+                        results.forEach(result => {
+                            html += `
+                            <tr>
+                                <td>${result.user_id}</td>
+                                <td>${result.username}</td>
+                                <td>${result.password}</td>
+                                <td><button type="button" class="btn btn-danger btn-sm btn-remove" data-user-id="${result.user_id}">Remove</button></td>
+                            </tr>
+                            `;
+                        });
+                    }
+
+                    if (hasFnameField) {
+                        html += `
+                        <tr>
+                            <th>fname</th>
+                            <th>lname</th>
+                        </tr>
+                        `;
+                        results.forEach(result => {
+                            html += `
+                            <tr>
+                                <td>${result.fname}</td>
+                                <td>${result.lname}</td>
+                                <td><button type="button" class="btn btn-danger btn-sm btn-remove2" data-fname-id="${result.fname}">Remove</button></td>
+
+                            </tr>
+                            `;
+                        });
+                    }
+
+                    if (hasPokedexID) {
+                        html += `
+                        <tr>
+                            <th>PokedexID</th>
+                            <th>TrainerID</th>
+                            <th>Pokemon_Species</th>
+                            <th>Pokemon_Level</th>
+                            <th>Ability</th>
+                            <th>Nature</th>
+                            <th>NickName</th>
+                            <th>Held_Item</th>
+
+                        </tr>
+                        `;
+                        results.forEach(result => {
+                            html += `
+                            <tr>
+                                <td>${result.PokedexId}</td>
+                                <td>${result.TrainerId}</td>
+                                <td>${result.Pokemon_Species}</td>
+                                <td>${result.Pokemon_Level}</td>
+                                <td>${result.Ability}</td>
+                                <td>${result.Nature}</td>
+                                <td>${result.NickName}</td>
+                                <td>${result.Held_Item}</td>
+
+                            </tr>
+                            `;
+                        });
+                    }
+
+                    if (hasMoveName) {
+                        html += `
+                        <tr>
+                            <th>Move_Name</th>
+                            <th>Move_Type</th>
+                            <th>Category</th>
+                            <th>Power</th>
+                            <th>Accuracy</th>
+                            <th>PP</th>
+                            <th>Move_Description</th>
+                        </tr>
+                        `;
+                        results.forEach(result => {
+                            html += `
+                            <tr>
+                                <td>${result.Move_Name}</td>
+                                <td>${result.Move_Type}</td>
+                                <td>${result.Category}</td>
+                                <td>${result.Pokemon_Level}</td>
+                                <td>${result.Power}</td>
+                                <td>${result.Accuracy}</td>
+                                <td>${result.PP}</td>
+                                <td>${result.Move_Description}</td>
+
+                            </tr>
+                            `;
+                        });
+                    }
+
+                    if (hasTypeChart) {
+                        html += `
+                        <tr>
+                            <th>Attacking_Type</th>
+                            <th>Defending_Type</th>
+                            <th>Effectiveness_Type</th>
+                        
+                        </tr>
+                        `;
+                        results.forEach(result => {
+                            html += `
+                            <tr>
+                                <td>${result.Attacking_Type}</td>
+                                <td>${result.Defending_Type}</td>
+                                <td>${result.Effectiveness_Type}</td>
+                              
+                            </tr>
+                            `;
+                        });
+                    }
+
+                } else {
+                    html += `
+                        <tr>
+                            <td colspan="4" class="text-center">None</td>
+                        </tr>
+                        `;
+                }
+
+                resultsBody.innerHTML = html;
+            };
+
+            request.send();
+        }
+
+        //delete data by id (row)
+        function delete_data(id) {
+
+    const removeButton = document.querySelector(`button[data-user-id="${id}"]`);
+    const removeButton2 = document.querySelector(`button[data-fname-id="${id}"]`);
+
+    if ((removeButton && confirm("Are you sure?"))  ) {
+        // Disable the button to prevent multiple requests
+        removeButton.disabled = true;
+
+                        //id here is importnt to request id later on
+        const param = `id=${id}`;
+
+        const request = new XMLHttpRequest();
+      //request to client server to delete
+        request.open('POST', '/delete_data', true);
+        //how data is being sent
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        request.onreadystatechange = () => {
+            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                alert('Data Deleted');
+                load_data();
+            }
+        };
+
+        request.send(param);
+    }
+    else if(removeButton2 && confirm("Are you sure?")){
+        removeButton2.disabled = true;
+        const param = `fname=${id}`;
+
+        const request = new XMLHttpRequest();
+      //request to client server to delete
+        request.open('POST', '/delete_data', true);
+        //how data is being sent
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        request.onreadystatechange = () => {
+            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                alert('Data Deleted');
+                load_data();
+            }
+        };
+
+        request.send(param);
+    }
+
+
+
+    else{
+      removeButton.disabled = false;
+      removeButton2.disabled = false;
+
+    }
+}
+
+
+
+        document.addEventListener('click', function (event) {
+            const removeButton = event.target.closest('.btn-remove');
+            const removeButton2 = event.target.closest('.btn-remove2');
+
+            if (removeButton) {
+                const userId = removeButton.getAttribute('data-user-id');
+                delete_data(userId);
+            }
+          else  if (removeButton2) {
+                const fnameId = removeButton2.getAttribute('data-fname-id');
+                delete_data(fnameId);
+            }
+        });
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value;
+            load_data(query);
+        });
+    </script>
 
 </body>
+
 </html>

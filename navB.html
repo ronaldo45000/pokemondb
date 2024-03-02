@@ -64,7 +64,7 @@
 </div>
 
 <!-- Tab content -->
-<div id="insertTab" class="tab-content active-tab">
+<div id="insertTab" class="tab-content">
  
 </div>
 
@@ -77,61 +77,78 @@
 </div>
 
 <script>
-     // Function to show a specific tab
-     function showTab(tabId) {
-        // Hide all tabs
-        const tabs = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => tab.style.display = 'none');
+ // Function to show a specific tab
+// Function to show a specific tab
+function showTab(tabId) {
+    // Check if the selected tab is already active
+    const selectedTab = document.getElementById(tabId);
+    if (selectedTab.style.display === 'block') {
+        return; // If the tab is already active, do nothing
+    }
 
-        // Show the selected tab
-        const selectedTab = document.getElementById(tabId);
-        if (selectedTab) {
-            selectedTab.style.display = 'block';
+    // Hide all tabs
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.style.display = 'none');
 
-            // Fetch and load the HTML content for the "Display" tab
-            if (tabId === 'displayTab') {
-                fetchAndExecuteScript('Display.html', selectedTab);
-            }
+    // Show the selected tab
+    if (selectedTab) {
+        selectedTab.style.display = 'block';
 
-            // Fetch and load the HTML content for the "ChangeTable" tab
-            if (tabId === 'insertTab') {
-                fetchAndExecuteScript('ChangeTable.html', selectedTab);
-            }
-
-            // Redirect to the "loginTest" page for the "Logout" tab
-            if (tabId === 'logout') {
-                window.location.href = 'loginTest.html';
-            }
+        // Fetch and load the HTML content for the tab
+        if (tabId === 'displayTab') {
+            fetchAndExecuteScript('Display.html', selectedTab);
+        } else if (tabId === 'insertTab') {
+            fetchAndExecuteScript('ChangeTable.html', selectedTab);
+        } else if (tabId === 'logout') {
+            window.location.href = 'loginTest.html';
         }
     }
+    fetchAndExecuteScript(contentUrl, selectedTab);
 
-    function fetchAndExecuteScript(url, targetElement) {
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+}
+ 
+
+
+function fetchAndExecuteScript(url, targetElement) {
+    // Clear existing scripts
+    const existingScripts = targetElement.querySelectorAll('script');
+    existingScripts.forEach(script => script.remove());
+
+    // Fetch and execute new scripts
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(scriptContent => {
+            // Set the HTML content
+            targetElement.innerHTML = scriptContent;
+
+            // Execute scripts using Function
+            const scripts = targetElement.querySelectorAll('script');
+            scripts.forEach(script => {
+                try {
+                    // Creating a new Function and immediately invoking it
+                    new Function(script.textContent)();
+                } catch (error) {
+                    console.error('Error executing script:', error);
                 }
-                return response.text();
-            })
-            .then(htmlContent => {
-                // Set the HTML content
-                targetElement.innerHTML = htmlContent;
+            });
+        })
+        .catch(error => console.error('Error fetching and executing script:', error));
+}
 
-                // Find and execute scripts in the fetched content
-                const scripts = targetElement.querySelectorAll('script');
-                scripts.forEach(script => {
-                    const newScript = document.createElement('script');
-                    newScript.textContent = script.textContent;
-                    document.head.appendChild(newScript); // Append to head to execute the script
-                });
-            })
-            .catch(error => console.error('Error fetching and executing script:', error));
-    }
 
-    window.onload = function () {
-        showTab('insertTab');
-    };
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Fetch and load the initial tab content
+    fetchAndExecuteScript('ChangeTable.html', document.getElementById('insertTab'));
+});
+
 </script>
+
 
 
 </body>
