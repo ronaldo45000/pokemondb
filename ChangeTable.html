@@ -9,18 +9,18 @@
 
     <style>
         /* Add any additional styles as needed */
-        #myModal {
+        /* #myModal {
             display: none;
-        }
+        } */
 
         /* Hide default fields and labels initially */
         #username, #password, #name, #age,#Pokemon1, #Pokemon1  {
-            display: none;
+            /* display: none; */
         }
 
         /* Show specific fields and labels based on the search term */
         .user-fields, .people-fields,.pokemon-fields {
-            display: block;
+            /* display: block; */
         }
     </style>
 </head>
@@ -28,15 +28,13 @@
 
     <input type="text" id="searchInput" placeholder="Search Term">
 
-    <button onclick="addButtonClick()" id="insert">Insert</button>
-    <button onclick="deleteRow()" id="delete">Delete</button>
+    <button onclick="addButtonClick()" id="insert">Insert / Update</button>
+    <!-- <button onclick="deleteRow()" id="delete">Delete</button> -->
 
     <table id="myTable">
       <thead>
         <tr>
-          <th>1</th>
-          <th>2</th>
-          <th>3</th>
+          
         </tr>
       </thead>
       <tbody>
@@ -54,25 +52,63 @@
         <input type="password" id="password" class="user-fields"><br>
 
         <!-- Additional fields based on the search term -->
-        <label for="name" class="people-fields">Name:</label>
-        <input type="text" id="name" class="people-fields"><br>
+        <label for="fname" class="people-fields">FName:</label>
+        <input type="text" id="fname" class="people-fields"><br>
         
-        <label for="age" class="people-fields">Age:</label>
-        <input type="text" id="age" class="people-fields"><br>
+        <label for="lname" class="people-fields">Lname:</label>
+        <input type="text" id="lname" class="people-fields"><br>
         <!-- Additional fields based on the search term -->
 
-        <label for="Pokemon1" class="pokemon-fields">Pokemon1:</label>
-        <input type="text" id="Pokemon1" class="pokemon-fields"><br>
+        <label for="PokedexId" class="pokemon-fields">PokedexID:</label>
+        <input type="text" id="PokedexId" class="pokemon-fields"><br>
         
-        <label for="Pokemon1" class="pokemon-fields">Pokemon1:</label>
-        <input type="text" id="Pokemon2" class="pokemon-fields"><br>
+        <label for="TrainerId" class="pokemon-fields">TrainerID:</label>
+        <input type="text" id="TrainerId" class="pokemon-fields"><br>
 
+        <label for="Pokemon_Species" class="pokemon-fields">Pokemon_Species:</label>
+        <input type="text" id="Pokemon_Species" class="pokemon-fields"><br>
+        
+        <label for="Pokemon_Level" class="pokemon-fields">Pokemon_Level:</label>
+        <input type="text" id="Pokemon_Level" class="pokemon-fields"><br>
 
+        <label for="Ability" class="pokemon-fields">Ability:</label>
+        <input type="text" id="Ability" class="pokemon-fields"><br>
+        
+        <label for="Nature" class="pokemon-fields">Nature:</label>
+        <input type="text" id="Nature" class="pokemon-fields"><br>
 
-        <input type="text" id="" placeholder="tablename" class="form-control" autocomplete="off">
+        <label for="Nickname" class="pokemon-fields">NickName:</label>
+        <input type="text" id="Nickname" class="pokemon-fields"><br>
+        
+        <label for="Held_Item" class="pokemon-fields">Held_Item:</label>
+        <input type="text" id="Held_Item" class="pokemon-fields"><br>
+        <!-- Additional fields based on the search term -->
+
+        <label for="Move_Name" class="moves-fields">Move_Name:</label>
+        <input type="text" id="Move_Name" class="moves-fields"><br>
+
+        <label for="Move_Type" class="moves-fields">Move_Type:</label>
+        <input type="text" id="Move_Type" class="moves-fields"><br>
+
+        <label for="Category" class="moves-fields">Category:</label>
+        <input type="text" id="Category" class="moves-fields"><br>
+
+        <label for="Power" class="moves-fields">Power:</label>
+        <input type="text" id="Power" class="moves-fields"><br>
+
+        <label for="Accuracy" class="moves-fields">Accuracy:</label>
+        <input type="text" id="Accuracy" class="moves-fields"><br>
+
+        <label for="PP" class="moves-fields">PP:</label>
+        <input type="text" id="PP" class="moves-fields"><br>
+
+        <label for="Move_Description" class="moves-fields">Move_Description:</label>
+        <input type="text" id="Move_Description" class="moves-fields"><br>
 
         <button onclick="submitForm()" id="s">Submit</button>
         <button onclick="cancelForm()" id="cancelButton">Cancel</button>
+        <button onclick="updateForm()" id="updateButton">Update</button>
+
       </div>
     </div>
 
@@ -89,8 +125,8 @@
       }
 
       // Check the search term and display the appropriate fields and labels
-      var searchTerm = searchInput.value.toLowerCase();
-      if (searchTerm === 'people') {
+      var searchTerm = searchInput.value;
+      if (searchTerm === 'info') {
           document.querySelectorAll('.people-fields').forEach(function(element) {
               element.style.display = 'block';
           });
@@ -100,10 +136,13 @@
           document.querySelectorAll('.pokemon-fields').forEach(function(element) {
               element.style.display = 'none';
           });
+          document.querySelectorAll('.moves-fields').forEach(function(element) {
+              element.style.display = 'none';
+          });
           modal.style.display = 'block';
 
       } 
-    else  if(searchTerm == 'pokemon'){
+    else  if(searchTerm == 'caughtpokemon'){
         document.querySelectorAll('.pokemon-fields').forEach(function(element) {
               element.style.display = 'block';
           });
@@ -111,6 +150,9 @@
               element.style.display = 'none';
           });
           document.querySelectorAll('.people-fields').forEach(function(element) {
+              element.style.display = 'none';
+          });
+          document.querySelectorAll('.moves-fields').forEach(function(element) {
               element.style.display = 'none';
           });
           modal.style.display = 'block';
@@ -127,9 +169,30 @@
           document.querySelectorAll('.pokemon-fields').forEach(function(element) {
               element.style.display = 'none';
           });
+          document.querySelectorAll('.moves-fields').forEach(function(element) {
+              element.style.display = 'none';
+          });
           modal.style.display = 'block';
 
       }
+      else if(searchTerm == 'moves') {
+        document.querySelectorAll('.moves-fields').forEach(function(element) {
+              element.style.display = 'block';
+          });
+
+          document.querySelectorAll('.user-fields').forEach(function(element) {
+              element.style.display = 'none';
+          });
+          document.querySelectorAll('.people-fields').forEach(function(element) {
+              element.style.display = 'none';
+          });
+          document.querySelectorAll('.pokemon-fields').forEach(function(element) {
+              element.style.display = 'none';
+          });
+          modal.style.display = 'block';
+
+      }
+
       else{
         alert('Type table name to insert data');
       }
@@ -139,24 +202,43 @@
   function submitForm() {
       var username = document.getElementById('username').value;
       var password = document.getElementById('password').value;
-      var name = document.getElementById('name').value;
-      var age = document.getElementById('age').value;
+
+      var fname = document.getElementById('fname').value;
+      var lname = document.getElementById('lname').value;
+
+      var pokemon1 =document.getElementById('PokedexId').value;
+      var pokemon2 = document.getElementById('TrainerId').value;
+      var pokemon3  = document.getElementById('Pokemon_Species').value;
+      var pokemon4  = document.getElementById('Pokemon_Level').value;
+      var pokemon5  = document.getElementById('Ability').value;
+      var pokemon6  = document.getElementById('Nature').value;
+      var pokemon7  = document.getElementById('Nickname').value;
+       var pokemon8  = document.getElementById('Held_Item').value;
+
+       var moves1 =document.getElementById('Move_Name').value;
+      var moves2 = document.getElementById('Move_Type').value;
+      var moves3  = document.getElementById('Category').value;
+      var moves4  = document.getElementById('Power').value;
+      var moves5  = document.getElementById('Accuracy').value;
+      var moves6  = document.getElementById('PP').value;
+      var moves7  = document.getElementById('Move_Description').value;
 
       // Use the entered values based on the displayed fields
       var value1 = (name && age) ? name : username;
       var value2 = (name && age) ? age : password;
+    
 
-      if (value1 && value2&& !age &&!name) {
-          // Create a new table row
-          var newRow = tableBody.insertRow();
-          
-          // Insert cells with the entered values
-          var cell1 = newRow.insertCell(0);
-          var cell2 = newRow.insertCell(1);
+      if (username && password) {
+        var newRow = tableBody.insertRow();
 
-          cell1.textContent = value1;
-          cell2.textContent = value2;
+// Insert cells with the entered values
+var cell1 = newRow.insertCell(0);
+var cell2 = newRow.insertCell(1);
 
+cell1.textContent = username;
+cell2.textContent = password;  
+modal.style.display = 'none';
+  
           // Make an AJAX request to the server to insert data
           fetch('/register', {
               method: 'POST',
@@ -168,6 +250,50 @@
           .then(response => response.json())
           .then(data => {
               if (data.success) {
+
+
+              } else {
+                  alert('Error inserting data into the database.');
+              }
+
+
+          })
+
+          .catch(error => console.error('Error:', error));
+
+          modal.style.display = 'none';
+
+      } 
+     else if(pokemon1&&pokemon2&&pokemon3&&pokemon4&&pokemon5&&pokemon6&&pokemon7&&pokemon8){
+        var newRow = tableBody.insertRow();
+       
+     
+          fetch('/insert', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ pokemon1,pokemon2,pokemon3,pokemon4,pokemon5,pokemon6,pokemon7,pokemon8 })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                var cell1 = newRow.insertCell(0);
+          var cell2 = newRow.insertCell(1);
+          var cell3 = newRow.insertCell(2);
+          var cell4 = newRow.insertCell(3);
+          var cell5 = newRow.insertCell(4);
+          var cell6 = newRow.insertCell(5);
+          var cell7 = newRow.insertCell(6);
+          var cell8 = newRow.insertCell(7);
+          cell1.textContent = pokemon1;
+          cell2.textContent = pokemon2;
+          cell3.textContent =pokemon3;
+          cell4.textContent = pokemon4;
+          cell5.textContent =pokemon5;
+          cell6.textContent = pokemon6;
+          cell7.textContent = pokemon7;
+          cell8.textContent =pokemon8;
                   // Hide the modal after successful submission
                   modal.style.display = 'none';
               } else {
@@ -175,31 +301,276 @@
               }
           })
           .catch(error => console.error('Error:', error));
-      } 
-      
-      else {
-          alert('Please fill out all fields.');
-      }
-  }
+          modal.style.display = 'none';
 
+      }
+
+      
+
+     else if(fname&&lname){
+        var newRow = tableBody.insertRow();
+        var cell1 = newRow.insertCell(0);
+var cell2 = newRow.insertCell(1);
+
+cell1.textContent = fname;
+cell2.textContent = lname;
+           // Make an AJAX request to the server to insert data
+           fetch('/insert2', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ fname, lname })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+          
+        
+                  // Hide the modal after successful submission
+                  modal.style.display = 'none';
+              } else {
+                  alert('Error inserting data into the database.');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+     else if(moves1&&moves2&&moves3&&moves4&&moves5&&moves6&&moves7){
+           // Make an AJAX request to the server to insert data
+           fetch('/insert3', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ moves1,moves2,moves3,moves4,moves5,moves6,moves7 })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                var cell1 = newRow.insertCell(0);
+          var cell2 = newRow.insertCell(1);
+          var cell3 = newRow.insertCell(2);
+          var cell4 = newRow.insertCell(3);
+          var cell5 = newRow.insertCell(4);
+          var cell6 = newRow.insertCell(5);
+          var cell7 = newRow.insertCell(6);
+          var cell8 = newRow.insertCell(7);
+          cell1.textContent = moves1;
+          cell2.textContent = moves2;
+          cell3.textContent =moves3;
+          cell4.textContent = moves4;
+          cell5.textContent =moves5;
+          cell6.textContent = moves6;
+          cell7.textContent = moves7;
+                  // Hide the modal after successful submission
+               
+              } else {
+                  alert('Error inserting data into the database.');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+          modal.style.display = 'none';
+      }
+
+
+    
+  }
+  function updateForm() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+
+      var moves1 =document.getElementById('Move_Name').value;
+      var moves2 = document.getElementById('Move_Type').value;
+      var moves3  = document.getElementById('Category').value;
+      var moves4  = document.getElementById('Power').value;
+      var moves5  = document.getElementById('Accuracy').value;
+      var moves6  = document.getElementById('PP').value;
+      var moves7  = document.getElementById('Move_Description').value;
+
+      var pokemon1 =document.getElementById('PokedexId').value;
+      var pokemon2 = document.getElementById('TrainerId').value;
+      var pokemon3  = document.getElementById('Pokemon_Species').value;
+      var pokemon4  = document.getElementById('Pokemon_Level').value;
+      var pokemon5  = document.getElementById('Ability').value;
+      var pokemon6  = document.getElementById('Nature').value;
+      var pokemon7  = document.getElementById('Nickname').value;
+       var pokemon8  = document.getElementById('Held_Item').value;
+
+      if (username && password) {
+        var newRow = tableBody.insertRow();
+
+// Insert cells with the entered values
+var cell1 = newRow.insertCell(0);
+var cell2 = newRow.insertCell(1);
+
+cell1.textContent = username;
+cell2.textContent = password;  
+modal.style.display = 'none';
+  
+          // Make an AJAX request to the server to insert data
+          fetch('/updateData', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ username, password })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+
+
+              } else {
+                  alert('Error inserting data into the database.');
+              }
+
+
+          })
+
+          .catch(error => console.error('Error:', error));
+
+          modal.style.display = 'none';
+
+      } 
+    
+     else if(moves1&&moves2&&moves3&&moves4&&moves5&&moves6&&moves7){
+           // Make an AJAX request to the server to insert data
+           fetch('/updateData2', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ moves1,moves2,moves3,moves4,moves5,moves6,moves7 })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                var cell1 = newRow.insertCell(0);
+          var cell2 = newRow.insertCell(1);
+          var cell3 = newRow.insertCell(2);
+          var cell4 = newRow.insertCell(3);
+          var cell5 = newRow.insertCell(4);
+          var cell6 = newRow.insertCell(5);
+          var cell7 = newRow.insertCell(6);
+          var cell8 = newRow.insertCell(7);
+          cell1.textContent = moves1;
+          cell2.textContent = moves2;
+          cell3.textContent =moves3;
+          cell4.textContent = moves4;
+          cell5.textContent =moves5;
+          cell6.textContent = moves6;
+          cell7.textContent = moves7;
+                  // Hide the modal after successful submission
+               
+              } else {
+                  alert('Error inserting data into the database.');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+          modal.style.display = 'none';
+      }
+      else if(pokemon1&&pokemon2&&pokemon3&&pokemon4&&pokemon5&&pokemon6&&pokemon7&&pokemon8){
+        var newRow = tableBody.insertRow();
+       
+     
+          fetch('/updateData3', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ pokemon1,pokemon2,pokemon3,pokemon4,pokemon5,pokemon6,pokemon7,pokemon8 })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                var cell1 = newRow.insertCell(0);
+          var cell2 = newRow.insertCell(1);
+          var cell3 = newRow.insertCell(2);
+          var cell4 = newRow.insertCell(3);
+          var cell5 = newRow.insertCell(4);
+          var cell6 = newRow.insertCell(5);
+          var cell7 = newRow.insertCell(6);
+          var cell8 = newRow.insertCell(7);
+          cell1.textContent = pokemon1;
+          cell2.textContent = pokemon2;
+          cell3.textContent =pokemon3;
+          cell4.textContent = pokemon4;
+          cell5.textContent =pokemon5;
+          cell6.textContent = pokemon6;
+          cell7.textContent = pokemon7;
+          cell8.textContent =pokemon8;
+                  // Hide the modal after successful submission
+                  modal.style.display = 'none';
+              } else {
+                  alert('Error inserting data into the database.');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+          modal.style.display = 'none';
+
+      }
+    
+    
+    }
   function cancelForm() {
       // Clear the fields and hide the modal
       document.getElementById('username').value = '';
       document.getElementById('password').value = '';
-      document.getElementById('name').value = '';
-      document.getElementById('age').value = '';
+      document.getElementById('fname').value = '';
+      document.getElementById('lname').value = '';
+
+    document.getElementById('PokedexId').value = '';
+      document.getElementById('TrainerId').value = '';
+      document.getElementById('Pokemon_Species').value = '';
+     document.getElementById('Pokemon_Level').value = '';
+      document.getElementById('Ability').value = '';
+     document.getElementById('Nature').value = '';
+     document.getElementById('Nickname').value = '';
+       document.getElementById('Held_Item').value = '';
+
+
+       document.getElementById('Move_Name').value= '';
+     document.getElementById('Move_Type').value= '';
+     document.getElementById('Category').value= '';
+     document.getElementById('Power').value= '';
+      document.getElementById('Accuracy').value= '';
+      document.getElementById('PP').value= '';
+      document.getElementById('Move_Description').value= '';
+
 
       document.getElementById('username').style.display = 'none';
       document.getElementById('password').style.display = 'none';
-      document.getElementById('name').style.display = 'none';
-      document.getElementById('age').style.display = 'none';
+      document.getElementById('fname').style.display = 'none';
+      document.getElementById('lname').style.display = 'none';
+
+      document.getElementById('PokedexId').style.display = 'none';
+      document.getElementById('TrainerId').style.display = 'none';
+      document.getElementById('Pokemon_Species').style.display = 'none';
+     document.getElementById('Pokemon_Level').style.display = 'none';
+      document.getElementById('Ability').style.display = 'none';
+     document.getElementById('Nature').style.display = 'none';
+     document.getElementById('Nickname').style.display = 'none';
+       document.getElementById('Held_Item').style.display = 'none';
+    
+       document.getElementById('Move_Name').style.display = 'none';
+     document.getElementById('Move_Type').style.display = 'none';
+     document.getElementById('Category').style.display = 'none';
+     document.getElementById('Power').style.display = 'none';
+      document.getElementById('Accuracy').style.display = 'none';
+      document.getElementById('PP').style.display = 'none';
+      document.getElementById('Move_Description').style.display = 'none';
+
 
       modal.style.display = 'none';
+
+
   }
 
   addButton.addEventListener('click', addButtonClick);
   document.getElementById('s').addEventListener('click', submitForm);
   document.getElementById('cancelButton').addEventListener('click', cancelForm);
+  document.getElementById('updateButton').addEventListener('click', updateForm);
+
 </script>
 
 </body>

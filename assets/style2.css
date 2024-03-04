@@ -77,7 +77,8 @@ font-size: 25px;
     padding-bottom: 10px;
     margin-bottom: 50px;
     position: relative;
-    top: 50px;
+    top: 10%;
+    left: 35%;
     border-radius: 18px;
     border: solid #000000 2px;
 
@@ -123,12 +124,16 @@ font-size: 25px;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    height: 50%;
+    height: 80%;
 
   }
-  #s,#cancelButton{
+  #s,#cancelButton,#updateButton{
 position: relative;
-top:310px;
+top:1%;
 left: 700px;
   }
 
+#remov{
+  position: relative;
+left: 5%;;
+}

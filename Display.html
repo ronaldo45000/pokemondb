@@ -67,10 +67,11 @@
                 if (results.length > 0) {
                     const hasUsernameField = results[0].hasOwnProperty('username');
                     const hasFnameField = results[0].hasOwnProperty('fname');
-                    const hasPokedexID = results[0].hasOwnProperty('PokedexId');
+                    const hasPokedexID = results[0].hasOwnProperty('PokedexId') && results[1].hasOwnProperty('TrainerId');
                     const hasMoveName = results[0].hasOwnProperty('Move_Name');
                     const hasTypeChart= results[0].hasOwnProperty('Attacking_Type');
-
+                    const hasPokemon = results[0].hasOwnProperty('PokedexId')
+                                       && results[1].hasOwnProperty('Pokemon_Name');
 
 
                     if (hasUsernameField) {
@@ -87,7 +88,7 @@
                                 <td>${result.user_id}</td>
                                 <td>${result.username}</td>
                                 <td>${result.password}</td>
-                                <td><button type="button" class="btn btn-danger btn-sm btn-remove" data-user-id="${result.user_id}">Remove</button></td>
+                                <td><button type="button"  id= "remov"  class="btn btn-danger btn-sm btn-remove" data-user-id="${result.user_id}">Remove</button></td>
                             </tr>
                             `;
                         });
@@ -105,7 +106,41 @@
                             <tr>
                                 <td>${result.fname}</td>
                                 <td>${result.lname}</td>
-                                <td><button type="button" class="btn btn-danger btn-sm btn-remove2" data-fname-id="${result.fname}">Remove</button></td>
+                                <td><button type="button" id= "remov" class="btn btn-danger btn-sm btn-remove2" data-fname-id="${result.fname}">Remove</button></td>
+
+                            </tr>
+                            `;
+                        });
+                    }
+
+                    if (hasPokemon) {
+                        html += `
+                        <tr>
+                            <th>Pokedex ID</th>
+                            <th>Pokemon Species</th>
+                            <th>Standard Ability</th>
+                            <th>Hidden Ability</th>
+                            <th>Egg Group</th>
+                            <th>Gender Ratio (M v. F)</th>
+                            <th>Height (m)</th>
+                            <th>Weight (kg)</th>
+                            <th>Levelling Rate</th>
+                            <th>Description</th>
+                        </tr>
+                        `;
+                        results.forEach(result => {
+                            html += `
+                            <tr>
+                                <td>${result.PokedexId}</td>
+                                <td>${result.Pokemon_Name}</td>
+                                <td>${result.Ability}</td>
+                                <td>${result.Hidden_Ability}</td>
+                                <td>${result.Egg_Group}</td>
+                                <td>${result.Gender_Ratio}</td>
+                                <td>${result.Height}</td>
+                                <td>${result.Weight}</td>
+                                <td>${result.Levelling_Rate}</td>
+                                <td>${result.Description}</td>
 
                             </tr>
                             `;
@@ -135,8 +170,9 @@
                                 <td>${result.Pokemon_Level}</td>
                                 <td>${result.Ability}</td>
                                 <td>${result.Nature}</td>
-                                <td>${result.NickName}</td>
+                                <td>${result.Nickname}</td>
                                 <td>${result.Held_Item}</td>
+                                <td><button type="button" id = "remov" class="btn btn-danger btn-sm btn-remove3" data-pokedex-id="${result.PokedexId}">Remove</button></td>
 
                             </tr>
                             `;
@@ -161,11 +197,11 @@
                                 <td>${result.Move_Name}</td>
                                 <td>${result.Move_Type}</td>
                                 <td>${result.Category}</td>
-                                <td>${result.Pokemon_Level}</td>
                                 <td>${result.Power}</td>
                                 <td>${result.Accuracy}</td>
                                 <td>${result.PP}</td>
                                 <td>${result.Move_Description}</td>
+                                <td><button type="button" id = "remov" class="btn btn-danger btn-sm btn-remove4" data-move-id="${result.Move_Name}">Remove</button></td>
 
                             </tr>
                             `;
@@ -177,7 +213,7 @@
                         <tr>
                             <th>Attacking_Type</th>
                             <th>Defending_Type</th>
-                            <th>Effectiveness_Type</th>
+                            <th>Effectiveness</th>
                         
                         </tr>
                         `;
@@ -186,7 +222,7 @@
                             <tr>
                                 <td>${result.Attacking_Type}</td>
                                 <td>${result.Defending_Type}</td>
-                                <td>${result.Effectiveness_Type}</td>
+                                <td>${result.Effectiveness}</td>
                               
                             </tr>
                             `;
@@ -212,6 +248,8 @@
 
     const removeButton = document.querySelector(`button[data-user-id="${id}"]`);
     const removeButton2 = document.querySelector(`button[data-fname-id="${id}"]`);
+    const removeButton3 = document.querySelector(`button[data-pokedex-id="${id}"]`);
+    const removeButton4 = document.querySelector(`button[data-move-id="${id}"]`);
 
     if ((removeButton && confirm("Are you sure?"))  ) {
         // Disable the button to prevent multiple requests
@@ -228,7 +266,7 @@
 
         request.onreadystatechange = () => {
             if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                alert('Data Deleted');
+             //   alert('Data Deleted');
                 load_data();
             }
         };
@@ -247,7 +285,45 @@
 
         request.onreadystatechange = () => {
             if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                alert('Data Deleted');
+             //   alert('Data Deleted');
+                load_data();
+            }
+        };
+
+        request.send(param);
+    }
+    else if(removeButton3 && confirm("Are you sure?")){
+        removeButton3.disabled = true;
+        const param = `caughtPokedex=${id}`;
+
+        const request = new XMLHttpRequest();
+      //request to client server to delete
+        request.open('POST', '/delete_data', true);
+        //how data is being sent
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        request.onreadystatechange = () => {
+            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+             //   alert('Data Deleted');
+                load_data();
+            }
+        };
+
+        request.send(param);
+    }
+    else if(removeButton4 && confirm("Are you sure?")){
+        removeButton4.disabled = true;
+        const param = `Move_Name=${id}`;
+
+        const request = new XMLHttpRequest();
+      //request to client server to delete
+        request.open('POST', '/delete_data', true);
+        //how data is being sent
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        request.onreadystatechange = () => {
+            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+             //   alert('Data Deleted');
                 load_data();
             }
         };
@@ -255,11 +331,11 @@
         request.send(param);
     }
 
-
-
     else{
       removeButton.disabled = false;
       removeButton2.disabled = false;
+      removeButton3.disabled = false;
+      removeButton4.disabled = false;
 
     }
 }
@@ -269,6 +345,8 @@
         document.addEventListener('click', function (event) {
             const removeButton = event.target.closest('.btn-remove');
             const removeButton2 = event.target.closest('.btn-remove2');
+            const removeButton3 = event.target.closest('.btn-remove3');
+            const removeButton4 = event.target.closest('.btn-remove4');
 
             if (removeButton) {
                 const userId = removeButton.getAttribute('data-user-id');
@@ -276,6 +354,14 @@
             }
           else  if (removeButton2) {
                 const fnameId = removeButton2.getAttribute('data-fname-id');
+                delete_data(fnameId);
+            }
+            else  if (removeButton3) {
+                const fnameId = removeButton3.getAttribute('data-pokedex-id');
+                delete_data(fnameId);
+            }
+            else  if (removeButton4) {
+                const fnameId = removeButton4.getAttribute('data-move-id');
                 delete_data(fnameId);
             }
         });

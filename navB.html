@@ -54,7 +54,6 @@
     </style>
 </head>
 <body>
-
 <!-- Navigation bar with tabs -->
 <div class="navbar">
     <button onclick="showTab('insertTab')">Tab1</button>
@@ -79,6 +78,7 @@
 <script>
  // Function to show a specific tab
 // Function to show a specific tab
+
 function showTab(tabId) {
     // Check if the selected tab is already active
     const selectedTab = document.getElementById(tabId);
@@ -103,7 +103,6 @@ function showTab(tabId) {
             window.location.href = 'loginTest.html';
         }
     }
-    fetchAndExecuteScript(contentUrl, selectedTab);
 
 }
  
@@ -145,6 +144,8 @@ function fetchAndExecuteScript(url, targetElement) {
 document.addEventListener('DOMContentLoaded', function () {
     // Fetch and load the initial tab content
     fetchAndExecuteScript('ChangeTable.html', document.getElementById('insertTab'));
+    showTab('insertTab');
+
 });
 
 </script>
