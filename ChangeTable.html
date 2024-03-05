@@ -126,23 +126,8 @@
 
       // Check the search term and display the appropriate fields and labels
       var searchTerm = searchInput.value;
-    //   if (searchTerm === 'info') {
-    //       document.querySelectorAll('.people-fields').forEach(function(element) {
-    //           element.style.display = 'block';
-    //       });
-    //       document.querySelectorAll('.user-fields').forEach(function(element) {
-    //           element.style.display = 'none';
-    //       });
-    //       document.querySelectorAll('.pokemon-fields').forEach(function(element) {
-    //           element.style.display = 'none';
-    //       });
-    //       document.querySelectorAll('.moves-fields').forEach(function(element) {
-    //           element.style.display = 'none';
-    //       });
-    //       modal.style.display = 'block';
 
-    //   } 
-    // else 
+    // pop up table to insert data
      if(searchTerm == 'caughtpokemon'){
         document.querySelectorAll('.pokemon-fields').forEach(function(element) {
               element.style.display = 'block';
@@ -160,22 +145,7 @@
 
 
       }
-    //  else if(searchTerm == 'user') {
-    //       document.querySelectorAll('.user-fields').forEach(function(element) {
-    //           element.style.display = 'block';
-    //       });
-    //       document.querySelectorAll('.people-fields').forEach(function(element) {
-    //           element.style.display = 'none';
-    //       });
-    //       document.querySelectorAll('.pokemon-fields').forEach(function(element) {
-    //           element.style.display = 'none';
-    //       });
-    //       document.querySelectorAll('.moves-fields').forEach(function(element) {
-    //           element.style.display = 'none';
-    //       });
-    //       modal.style.display = 'block';
 
-    //   }
       else if(searchTerm == 'moves') {
         document.querySelectorAll('.moves-fields').forEach(function(element) {
               element.style.display = 'block';
@@ -199,7 +169,7 @@
       }
 
   }
-
+//This button is for insert data
   function submitForm() {
       var username = document.getElementById('username').value;
       var password = document.getElementById('password').value;
@@ -267,7 +237,7 @@ modal.style.display = 'none';
       } 
      else 
      
-     
+     //if fill out all data for caughtpokemon it will add to database if sucessful
      if(pokemon1&&pokemon2&&pokemon3&&pokemon4&&pokemon5&&pokemon6&&pokemon7&&pokemon8){
         var newRow = tableBody.insertRow();
        
@@ -309,36 +279,8 @@ modal.style.display = 'none';
 
       }
 
-      
+           //if fill out all data for moves it will add to database if sucessful
 
-     else if(fname&&lname){
-        var newRow = tableBody.insertRow();
-        var cell1 = newRow.insertCell(0);
-var cell2 = newRow.insertCell(1);
-
-cell1.textContent = fname;
-cell2.textContent = lname;
-           // Make an AJAX request to the server to insert data
-           fetch('/insert2', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ fname, lname })
-          })
-          .then(response => response.json())
-          .then(data => {
-              if (data.success) {
-          
-        
-                  // Hide the modal after successful submission
-                  modal.style.display = 'none';
-              } else {
-                  alert('Error inserting data into the database.');
-              }
-          })
-          .catch(error => console.error('Error:', error));
-      }
      else if(moves1&&moves2&&moves3&&moves4&&moves5&&moves6&&moves7){
            // Make an AJAX request to the server to insert data
            var newRow = tableBody.insertRow();
@@ -381,6 +323,7 @@ cell2.textContent = lname;
 
     
   }
+  //This is update function for moves and caughtpokemon
   function updateForm() {
       var username = document.getElementById('username').value;
       var password = document.getElementById('password').value;
@@ -402,45 +345,8 @@ cell2.textContent = lname;
       var pokemon7  = document.getElementById('Nickname').value;
        var pokemon8  = document.getElementById('Held_Item').value;
 
-//       if (username && password) {
-//         var newRow = tableBody.insertRow();
 
-// // Insert cells with the entered values
-// var cell1 = newRow.insertCell(0);
-// var cell2 = newRow.insertCell(1);
-
-// cell1.textContent = username;
-// cell2.textContent = password;  
-// modal.style.display = 'none';
-  
-//           // Make an AJAX request to the server to insert data
-//           fetch('/updateData', {
-//               method: 'POST',
-//               headers: {
-//                   'Content-Type': 'application/json'
-//               },
-//               body: JSON.stringify({ username, password })
-//           })
-//           .then(response => response.json())
-//           .then(data => {
-//               if (data.success) {
-
-
-//               } else {
-//                   alert('Error inserting data into the database.');
-//               }
-
-
-//           })
-
-//           .catch(error => console.error('Error:', error));
-
-//           modal.style.display = 'none';
-
-//       } 
-    
-   //  else 
-     
+     //if fill out all data for moves, it will update to database if sucessful
      if(moves1&&moves2&&moves3&&moves4&&moves5&&moves6&&moves7){
         var newRow = tableBody.insertRow();
 
@@ -523,6 +429,7 @@ cell2.textContent = lname;
     
     
     }
+    //this button to cancel for adding or update if users dont want 
   function cancelForm() {
       // Clear the fields and hide the modal
       document.getElementById('username').value = '';

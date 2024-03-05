@@ -51,6 +51,8 @@ app.post('/register', (req, res) => {
         res.sendFile(__dirname + '/loginTest.html')
     });
 });
+
+//this is insert for caughtpokemon table
 app.post('/insert', (req, res) => {
     const { pokemon1, pokemon2,pokemon3,pokemon4,pokemon5,pokemon6,pokemon7,pokemon8 } = req.body
     const sql = 'INSERT INTO caughtpokemon (PokedexId, TrainerId,Pokemon_Species,Pokemon_Level,Ability,Nature,Nickname,Held_Item) VALUES (?, ?,?, ?,?, ?,?, ?)';
@@ -72,14 +74,9 @@ app.post('/insert', (req, res) => {
         return res.status(200).json({ success: true, message: 'Move inserted successfully.' });
     });
 });
-app.post('/insert2', (req, res) => {
-    const {fname,lname } = req.body
-    const sql = 'INSERT INTO info (fname, lname) VALUES (?, ?)';
-    db.query(sql, [ fname, lname], (err) => {
-        if (err) throw err;
-      
-    });
-});
+
+//this is insert for moves table
+
 
 app.post('/insert3', (req, res) => {
     const { moves1, moves2, moves3, moves4, moves5, moves6, moves7 } = req.body;
@@ -104,20 +101,8 @@ app.post('/insert3', (req, res) => {
     });
 });
 
+//this is the update for moves
 
-app.post('/updateData', (req, res) => {
-    const { username, password } = req.body;
-    const sql = 'UPDATE reg SET password = ? WHERE username = ?';
-    db.query(sql, [password, username], (err, result) => {
-        if (err) {
-            console.error('Error updating data:', err);
-            res.json({ success: false, message: 'Error updating data in the database.' });
-        } else {
-            console.log('Number of records updated:', result.affectedRows);
-            res.json({ success: true, message: 'Data updated successfully.' });
-        }
-    });
-});
 app.post('/updateData2', (req, res) => {
     //be careful this get data base on order how you put, when query make sure it is in correct order (Update might mess order)
     const { moves1, moves2, moves3, moves4, moves5, moves6, moves7 } = req.body;
@@ -134,6 +119,7 @@ app.post('/updateData2', (req, res) => {
         }
     });
 });
+//this is the update for caughtpokemon
 app.post('/updateData3', (req, res) => {
     //be careful this get data base on order how you put, when query make sure it is in correct order (Update might mess order)
     const { pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, pokemon7,pokemon8 } = req.body;
@@ -150,6 +136,7 @@ app.post('/updateData3', (req, res) => {
         }
     });
 });
+//if user and password match, it will let user to next page
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
     const sql = 'SELECT * FROM reg WHERE username = ? AND password = ?';
@@ -173,21 +160,21 @@ const query = request.query.q;
 var sql = '';
 
 
-// if(query != 'info'&&query!= 'caughtpokemon' &&query!= 'moves' &&query!="typechart"&&query!= 'pokemon')
-// 	{
-        if(query == 'user'){
-            sql = `SELECT * FROM reg ORDER BY user_id`;
+// // 	{
+//         if(query == 'user'){
+//             sql = `SELECT * FROM reg ORDER BY user_id`;
 
-        }
-// else{
-// 		sql = `SELECT * FROM reg WHERE username LIKE '%${query}%'  OR user_id LIKE '%${query}%'`;
-// }
-    //}
+//         }
 
-    else if(query == 'info'){
-        sql = `SELECT * FROM info ORDER BY fname`;
-    }
-    else if(query == 'caughtpokemon'){
+
+//     else if(query == 'info'){
+//         sql = `SELECT * FROM info ORDER BY fname`;
+//     }
+//     else 
+
+//THIS IS VIEW FOR caughtpokemon,moves,typechart and pokemon
+    
+    if(query == 'caughtpokemon'){
         sql = `SELECT * FROM caughtpokemon ORDER BY PokedexId`;
 
     }
@@ -231,7 +218,7 @@ app.post("/delete_data", (request, response) => {
     const sql3 = `DELETE FROM caughtpokemon WHERE PokedexId = '${caughtPokemon}'`;
     const sql4 = `DELETE FROM moves WHERE Move_Name = '${move}'`;
 
-    // DELETE FROM CaughtPokemon WHERE TrainerId = 3 AND PokemonId = 654
+ 
 
 if (caughtPokemon) {
         db.query(sql3, (error, results) => {
@@ -260,19 +247,7 @@ if (caughtPokemon) {
 });
 
 
-// app.post("/delete_data", (request, response) => {
 
-// 	const id = request.body.id;
-
-// 	const sql2 = `DELETE FROM info WHERE fname = '${id}'`;
-
-
-//     db.query(sql2, (error, results) => {
-// 		response.json({
-// 			message : 'Data Deleted'
-// 		});
-// 	});
-// });
 
 // Server start
 app.listen(port, () => {
