@@ -232,24 +232,8 @@ app.post("/delete_data", (request, response) => {
     const sql4 = `DELETE FROM moves WHERE Move_Name = '${move}'`;
 
     // DELETE FROM CaughtPokemon WHERE TrainerId = 3 AND PokemonId = 654
-    if(id){
-	db.query(sql, (error, results) => {
-		response.json({
-			message : 'Data Deleted'
-		});
-	});
-}
-else if(fname){
-    db.query(sql2, (error, results) => {
-		response.json({
-			message : 'Data Deleted'
-		});
-       
-	});
 
-
-}
-else if (caughtPokemon) {
+if (caughtPokemon) {
         db.query(sql3, (error, results) => {
             if (error) {
                 console.error("Failed to delete data:", error);

@@ -74,44 +74,44 @@
                                        && results[1].hasOwnProperty('Pokemon_Name');
 
 
-                    if (hasUsernameField) {
-                        html += `
-                        <tr>
-                            <th>ID</th>
-                            <th>username</th>
-                            <th>password</th>
-                        </tr>
-                        `;
-                        results.forEach(result => {
-                            html += `
-                            <tr>
-                                <td>${result.user_id}</td>
-                                <td>${result.username}</td>
-                                <td>${result.password}</td>
-                                <td><button type="button"  id= "remov"  class="btn btn-danger btn-sm btn-remove" data-user-id="${result.user_id}">Remove</button></td>
-                            </tr>
-                            `;
-                        });
-                    }
+                    // if (hasUsernameField) {
+                    //     html += `
+                    //     <tr>
+                    //         <th>ID</th>
+                    //         <th>username</th>
+                    //         <th>password</th>
+                    //     </tr>
+                    //     `;
+                    //     results.forEach(result => {
+                    //         html += `
+                    //         <tr>
+                    //             <td>${result.user_id}</td>
+                    //             <td>${result.username}</td>
+                    //             <td>${result.password}</td>
+                    //             <td><button type="button"  id= "remov"  class="btn btn-danger btn-sm btn-remove" data-user-id="${result.user_id}">Remove</button></td>
+                    //         </tr>
+                    //         `;
+                    //     });
+                    // }
 
-                    if (hasFnameField) {
-                        html += `
-                        <tr>
-                            <th>fname</th>
-                            <th>lname</th>
-                        </tr>
-                        `;
-                        results.forEach(result => {
-                            html += `
-                            <tr>
-                                <td>${result.fname}</td>
-                                <td>${result.lname}</td>
-                                <td><button type="button" id= "remov" class="btn btn-danger btn-sm btn-remove2" data-fname-id="${result.fname}">Remove</button></td>
+                    // if (hasFnameField) {
+                    //     html += `
+                    //     <tr>
+                    //         <th>fname</th>
+                    //         <th>lname</th>
+                    //     </tr>
+                    //     `;
+                    //     results.forEach(result => {
+                    //         html += `
+                    //         <tr>
+                    //             <td>${result.fname}</td>
+                    //             <td>${result.lname}</td>
+                    //             <td><button type="button" id= "remov" class="btn btn-danger btn-sm btn-remove2" data-fname-id="${result.fname}">Remove</button></td>
 
-                            </tr>
-                            `;
-                        });
-                    }
+                    //         </tr>
+                    //         `;
+                    //     });
+                    // }
 
                     if (hasPokemon) {
                         html += `
